@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Landlord Portfolio | Beneath the Surface | The Snag Tag</title>
+<style>
+:root{
+  --paper:#F7FAFD; --sheet:#FFFFFF; --grid:rgba(45,91,154,.07); --grid2:rgba(45,91,154,.035);
+  --ink:#16243F; --ink2:#44546F; --muted:#6B7A93; --line:#C9D6E8; --line2:#E2EAF4;
+  --blue:#2D5B9A; --blue-soft:#E8F0FA; --cyan:#1E3A8A; --cyan-soft:#EAEFFB;
+  --high:#B3261E; --high-soft:#FCEBEA; --med:#A15C00; --med-soft:#FFF3E0; --low:#2E7D4F; --low-soft:#E7F5EC;
+  --focus:#1E3A8A; --shadow:0 1px 2px rgba(22,36,63,.06),0 4px 14px rgba(22,36,63,.05);
+  --mono:ui-monospace,"SFMono-Regular","Cascadia Mono","Roboto Mono",Consolas,monospace;
+  --sans:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+}
+[data-theme="dark"]{
+  --paper:#0F1A2C; --sheet:#15233A; --grid:rgba(140,180,230,.07); --grid2:rgba(140,180,230,.035);
+  --ink:#E6EEF9; --ink2:#B8C6DB; --muted:#8C9BB2; --line:#2F4466; --line2:#243855;
+  --blue:#8CB4E6; --blue-soft:#1C3150; --cyan:#BFD2F8; --cyan-soft:#16223F;
+  --high:#FF8A80; --high-soft:#3A1E22; --med:#FFB74D; --med-soft:#3A2C17; --low:#81C995; --low-soft:#1B3326;
+  --shadow:none;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  font-family:var(--sans); color:var(--ink); background:var(--paper); font-size:15px; line-height:1.5;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px),
+  linear-gradient(var(--grid2) 1px,transparent 1px),linear-gradient(90deg,var(--grid2) 1px,transparent 1px);
+  background-size:80px 80px,80px 80px,16px 16px,16px 16px;
+}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:var(--blue)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px}
+/* Title block */
+header.tb{background:var(--sheet);border-bottom:2px solid var(--ink);position:sticky;top:0;z-index:20}
+@media(max-width:700px){header.tb{position:static}.tb-cell{padding:8px 12px}}
+.tb-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap}
+.tb-cell{padding:10px 14px;border-right:1px solid var(--line);display:flex;flex-direction:column;justify-content:center;min-width:0}
+.tb-cell:last-child{border-right:0}
+.tb-label{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.brand{flex:1 1 280px}
+.brand .coll{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan)}
+.brand h1{margin:2px 0 0;font-size:20px;font-weight:700;letter-spacing:-.01em}
+.brand h1 span{color:var(--blue);font-weight:600}
+.tb-ctrl{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.seg{display:inline-flex;border:1px solid var(--ink);border-radius:4px;overflow:hidden}
+.seg button{border:0;background:transparent;padding:6px 10px;font-size:13px;cursor:pointer;font-family:var(--mono)}
+.seg button+button{border-left:1px solid var(--ink)}
+.seg button.on{background:var(--ink);color:var(--sheet)}
+nav.tabs{background:var(--sheet);border-bottom:1px solid var(--line)}
+nav.tabs .wrap{display:flex;gap:2px;overflow-x:auto;scrollbar-width:thin}
+nav.tabs button{border:0;background:none;padding:12px 14px;cursor:pointer;font-size:14px;color:var(--ink2);border-bottom:3px solid transparent;white-space:nowrap}
+nav.tabs button .n{font-family:var(--mono);font-size:11px;color:var(--muted);margin-right:6px}
+nav.tabs button.on{color:var(--ink);border-bottom-color:var(--cyan);font-weight:600}
+main{padding:22px 0 60px}
+.sheet{background:var(--sheet);border:1px solid var(--line);border-radius:6px;box-shadow:var(--shadow);margin-bottom:18px;position:relative}
+.sheet-h{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line2);flex-wrap:wrap}
+.sheet-h h2{margin:0;font-size:17px}
+.sheet-h .ref{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.08em}
+.sheet-b{padding:16px}
+.lede{color:var(--ink2);margin:0 0 12px;max-width:760px}
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media(max-width:820px){.g3,.g4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.g2,.g3,.g4{grid-template-columns:1fr}}
+label.f{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--ink2);min-width:0}
+label.f>span{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+input[type=text],input[type=number],input[type=date],select,textarea{
+  width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:4px;background:var(--sheet);font-size:14px}
+textarea{min-height:70px;resize:vertical}
+input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--focus);outline-offset:1px}
+.hint{font-size:12px;color:var(--muted)}
+.conv{font-family:var(--mono);font-size:12px;color:var(--cyan);min-height:16px}
+.btn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--ink);background:var(--sheet);padding:8px 14px;border-radius:4px;cursor:pointer;font-size:14px}
+.btn:hover{background:var(--blue-soft)}
+.btn.pri{background:var(--ink);color:var(--sheet)}
+.btn.pri:hover{background:var(--blue);border-color:var(--blue)}
+.btn.sm{padding:5px 10px;font-size:13px}
+.btn.ghost{border-color:var(--line)}
+.btn.danger{border-color:var(--high);color:var(--high)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:var(--sheet);border-radius:999px;padding:5px 11px;font-size:13px;cursor:pointer;color:var(--ink2)}
+.chip.on{background:var(--cyan-soft);border-color:var(--cyan);color:var(--ink);font-weight:600}
+.chip.on::before{content:"\2713  ";color:var(--cyan)}
+/* Journey */
+.journey{display:flex;gap:0;overflow-x:auto;padding:4px 0}
+.jstep{flex:1 0 110px;text-align:center;position:relative;padding:8px 4px}
+.jstep .dot{width:34px;height:34px;margin:0 auto 6px;border:2px solid var(--ink);border-radius:50%;display:grid;place-items:center;font-family:var(--mono);font-size:12px;background:var(--sheet);position:relative;z-index:1}
+.jstep::after{content:"";position:absolute;top:24px;left:50%;right:-50%;border-top:2px dashed var(--line)}
+.jstep:last-child::after{display:none}
+.jstep .t{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+.jstep .d{font-size:12px;color:var(--muted)}
+/* Tables */
+.tbl{width:100%;border-collapse:collapse;font-size:14px}
+.tbl th{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:left;padding:8px;border-bottom:2px solid var(--ink);font-weight:500}
+.tbl td{padding:10px 8px;border-bottom:1px solid var(--line2);vertical-align:top}
+.tbl td .sub{font-size:12px;color:var(--muted)}
+.tbl-wrap{overflow-x:auto}
+@media(max-width:700px){
+  .tbl.stack thead{display:none}
+  .tbl.stack tr{display:block;border:1px solid var(--line);border-radius:6px;margin-bottom:10px;padding:6px}
+  .tbl.stack td{display:block;border:0;padding:6px}
+  .tbl.stack td[data-l]::before{content:attr(data-l);display:block;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+}
+.risk{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:3px;border:1px solid}
+.risk.High{color:var(--high);background:var(--high-soft);border-color:var(--high)}
+.risk.Medium{color:var(--med);background:var(--med-soft);border-color:var(--med)}
+.risk.Low{color:var(--low);background:var(--low-soft);border-color:var(--low)}
+.stat{display:inline-flex;border:1px solid var(--line);border-radius:4px;overflow:hidden;flex-wrap:wrap}
+.stat button{border:0;background:var(--sheet);padding:5px 9px;font-size:12px;cursor:pointer;font-family:var(--mono);color:var(--ink2)}
+.stat button+button{border-left:1px solid var(--line)}
+.stat button.on[data-v="ok"],.stat button.on[data-v="none"]{background:var(--low-soft);color:var(--low);font-weight:700}
+.stat button.on[data-v="finding"],.stat button.on[data-v="signs"]{background:var(--high-soft);color:var(--high);font-weight:700}
+.stat button.on[data-v="open"],.stat button.on[data-v="unchecked"]{background:var(--blue-soft);color:var(--blue);font-weight:700}
+.stat button.on[data-v="na"],.stat button.on[data-v="noaccess"]{background:var(--med-soft);color:var(--med);font-weight:700}
+.note-in{margin-top:6px;font-size:13px;padding:6px 8px}
+/* Findings */
+.fcard{border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:6px;padding:12px 14px;margin-bottom:10px;background:var(--sheet);display:flex;gap:12px;justify-content:space-between;flex-wrap:wrap}
+.fcard.High{border-left-color:var(--high)}.fcard.Medium{border-left-color:var(--med)}.fcard.Low{border-left-color:var(--low)}
+.fid{font-family:var(--mono);font-weight:700;letter-spacing:.06em}
+.fcard .meta{font-size:13px;color:var(--ink2)}
+.empty{border:1px dashed var(--line);border-radius:6px;padding:26px;text-align:center;color:var(--muted)}
+/* Editor */
+.step{border-top:1px solid var(--line2);padding:16px 0}
+.step:first-child{border-top:0;padding-top:0}
+.step-h{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.step-h .num{width:28px;height:28px;border:2px solid var(--ink);border-radius:50%;display:grid;place-items:center;font-family:var(--mono);font-size:12px;flex:0 0 auto}
+.step-h h3{margin:0;font-size:15px}
+.step-h .tag{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan)}
+.q{font-size:14px;font-weight:600;margin:10px 0 6px}
+.editor-layout{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:18px}
+@media(max-width:960px){.editor-layout{grid-template-columns:1fr}}
+.side{position:sticky;top:130px;align-self:start}
+@media(max-width:960px){.side{position:static}}
+.prompt-box{border:1px solid var(--cyan);border-radius:6px;background:var(--cyan-soft);padding:12px 14px}
+.prompt-box h4{margin:0 0 6px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan)}
+.prompt-box ul{margin:4px 0 10px;padding-left:18px;font-size:13px}
+.prompt-box li{margin-bottom:4px}
+.warn{border:1px solid var(--high);background:var(--high-soft);border-radius:6px;padding:10px 12px;font-size:13px;margin-bottom:10px}
+.warn b{color:var(--high)}
+.info{border:1px solid var(--blue);background:var(--blue-soft);border-radius:6px;padding:10px 12px;font-size:13px;margin-bottom:10px}
+.ok{border:1px solid var(--low);background:var(--low-soft);border-radius:6px;padding:10px 12px;font-size:13px;margin-bottom:10px}
+/* Photos */
+.photos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+@media(max-width:560px){.photos{grid-template-columns:1fr}}
+.ph{border:1px dashed var(--ink2);border-radius:6px;padding:10px;text-align:center;background:var(--paper);min-height:160px;display:flex;flex-direction:column;gap:6px;justify-content:center;align-items:center}
+.ph .pt{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+.ph .pd{font-size:12px;color:var(--muted)}
+.ph img{max-width:100%;max-height:170px;border-radius:4px;border:1px solid var(--line)}
+.ph input{display:none}
+/* Dew */
+.dew-out{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}
+@media(max-width:560px){.dew-out{grid-template-columns:1fr}}
+.kpi{border:1px solid var(--line);border-radius:6px;padding:10px 12px;background:var(--paper)}
+.kpi .k{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.kpi .v{font-size:20px;font-weight:700;font-family:var(--mono)}
+.kpi .s{font-size:12px;color:var(--ink2)}
+.sum-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media(max-width:700px){.sum-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.legend{display:grid;gap:8px;font-size:13px}
+.legend div{display:flex;gap:10px;align-items:flex-start}
+.refs{font-size:13px;padding-left:18px}
+.refs li{margin-bottom:6px}
+.src{font-family:var(--mono);font-size:10.5px;letter-spacing:.03em;color:var(--muted);margin-top:4px}
+.src a{color:var(--cyan);text-decoration:none;border-bottom:1px dotted var(--cyan)}
+.srclist{list-style:none;padding:0;margin:0;font-size:13px}
+.srclist li{padding:8px 0;border-bottom:1px solid var(--line2);overflow-wrap:anywhere}
+.refs li,.rep-f dd{overflow-wrap:anywhere}
+.srclist .key{font-family:var(--mono);font-size:11px;color:var(--cyan);letter-spacing:.06em;text-transform:uppercase;display:block}
+.srclist li:target{background:var(--cyan-soft)}
+.steps li{margin-bottom:8px}
+@media(max-width:700px){#reportBody table.tbl{display:block;overflow-x:auto}}
+.toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--sheet);padding:10px 16px;border-radius:4px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:99;max-width:90vw}
+.toast.show{opacity:1}
+footer{border-top:2px solid var(--ink);background:var(--sheet);padding:14px 0;font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--muted)}
+footer .wrap{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.hide{display:none!important}
+.buyer-only,.owner-only{}
+body[data-mode="buyer"] .owner-only{display:none!important}
+body[data-mode="owner"] .buyer-only{display:none!important}
+/* Report */
+.rep-photos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:8px}
+.rep-photos figure{margin:0;font-family:var(--mono);font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.rep-photos img{width:100%;border:1px solid var(--line);border-radius:3px}
+.rep-f{border:1px solid var(--line);border-radius:6px;padding:12px;margin-bottom:12px;page-break-inside:avoid}
+.rep-f dl{display:grid;grid-template-columns:170px 1fr;gap:4px 12px;margin:8px 0;font-size:13px}
+.rep-f dt{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.rep-f dd{margin:0}
+@media(max-width:560px){.rep-f dl{grid-template-columns:1fr}}
+@media print{
+  :root,[data-theme="dark"]{--paper:#fff;--sheet:#fff;--ink:#16243F;--ink2:#44546F;--muted:#5B6A82;--line:#B8C6DA;--line2:#DDE5F0;--blue:#2D5B9A;--blue-soft:#EEF3FA;--cyan:#1E3A8A;--cyan-soft:#EAEFFB;--high:#B3261E;--high-soft:#FCEBEA;--med:#A15C00;--med-soft:#FFF3E0;--low:#2E7D4F;--low-soft:#E7F5EC}
+  body{background:#fff;font-size:12px;color:#16243F}
+  .rep-f{page-break-inside:auto}
+  .rep-f dl,.rep-photos figure{page-break-inside:avoid}
+  .rep-photos img{max-height:220px;object-fit:contain}
+  header.tb,nav.tabs,footer,.no-print,.toast{display:none!important}
+  .view{display:none!important}
+  #view-report{display:block!important}
+  .sheet{box-shadow:none;border-color:#999}
+  main{padding:0}
+}
+</style>
+<style>
+.pcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.pc{background:var(--sheet);border:1px solid var(--line);border-left:6px solid var(--cyan);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:6px}
+.pc h3{margin:0;font-size:16px}.pc .sub{font-size:12.5px;color:var(--muted)}
+.pc .row{margin-top:auto}
+.sf{display:grid;grid-template-columns:28px 1fr 150px 150px 150px;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line2)}
+.sf .sub{font-size:12px;color:var(--muted)}
+.pill{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;border-radius:999px;padding:2px 8px;border:1px solid var(--line);margin-right:4px}
+.pill.cit{border-color:var(--low);color:var(--low)}.pill.pp{border-color:var(--muted);color:var(--muted)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:12px}
+@media(max-width:760px){.sf{grid-template-columns:28px 1fr}.sf>*:nth-child(n+3){grid-column:2}}
+</style>
+</head>
+<body data-mode="owner">
+<header class="tb"><div class="wrap tb-row" style="padding:0">
+  <div class="tb-cell brand"><div class="coll">The Snag Tag &middot; Beneath the Surface</div><h1>Landlord <span>Portfolio</span></h1></div>
+  <div class="tb-cell"><div class="tb-label">Display</div><div class="seg" id="themeSeg"><button data-v="light">Light</button><button data-v="dark">Dark</button></div></div>
+</div></header>
+<nav class="tabs"><div class="wrap" id="tabs">
+  <button data-t="port"><span class="n">00</span>Portfolio</button>
+  <button data-t="prop"><span class="n">01</span>Property</button>
+  <button data-t="due"><span class="n">02</span>All due dates</button>
+  <button data-t="report"><span class="n">03</span>Report &amp; backup</button>
+</div></nav>
+<main><div class="wrap">
+
+<section class="view" id="view-port">
+  <div class="sheet"><div class="sheet-h"><h2>Your properties</h2><span class="ref" id="portRef"></span></div>
+  <div class="sheet-b">
+    <p class="lede">Safety records, tenancy dates, condition reports and open defects for every property you let, in one place. Pair it with the Move-In / Move-Out tool for room-by-room condition, and the Safety Trio for full checks.</p>
+    <div class="kpis" id="kpis"></div>
+    <div class="row" style="margin-bottom:12px"><button class="btn pri" id="addProp" type="button">+ Add property</button></div>
+    <div class="pcards" id="pcards"></div>
+  </div></div>
+</section>
+
+<section class="view hide" id="view-prop">
+  <div id="noProp" class="sheet"><div class="sheet-b"><div class="empty">Add a property first on the Portfolio tab.</div></div></div>
+  <div id="propWrap" class="hide">
+  <div class="row no-print" style="margin-bottom:10px"><label class="f" style="min-width:240px"><span>Property</span><select id="propSel"></select></label></div>
+  <div class="sheet"><div class="sheet-h"><h2>Property &amp; tenancy</h2><span class="ref">TITLE BLOCK</span></div>
+  <div class="sheet-b"><div class="grid g3">
+    <label class="f"><span>Property name / reference</span><input type="text" data-q="name"></label>
+    <label class="f"><span>Address</span><input type="text" data-q="address"></label>
+    <label class="f"><span>Type</span><select data-q="type"><option value="">Select</option><option>House</option><option>Apartment / condo</option><option>Room / HMO</option><option>Holiday let</option><option>Other</option></select></label>
+    <label class="f"><span>Fuel-burning appliances?</span><select data-q="fuel"><option value="">Select</option><option>Yes</option><option>No</option></select></label>
+    <label class="f"><span>Tenancy start</span><input type="date" data-q="tstart"></label>
+    <label class="f"><span>Tenancy end / renewal</span><input type="date" data-q="tend"></label>
+    <label class="f"><span>Deposit scheme and reference</span><input type="text" data-q="deposit" placeholder="Record, don't guess"></label>
+    <label class="f"><span>Move-in condition report date</span><input type="date" data-q="cin"></label>
+    <label class="f"><span>Move-out condition report date</span><input type="date" data-q="cout"></label>
+  </div>
+  <label class="f" style="margin-top:12px"><span>Notes</span><textarea data-q="notes"></textarea></label>
+  <div class="row" style="margin-top:10px"><button class="btn danger sm" id="delProp" type="button">Delete this property</button></div></div></div>
+
+  <div class="sheet"><div class="sheet-h"><h2>Safety and maintenance records</h2><span class="ref" id="sfRef"></span></div>
+  <div class="sheet-b"><p class="lede">Switch on what applies to this property and enter the last date. <span class="pill cit">CITED</span> frequencies come from public guidance. <span class="pill pp">LOCAL LAW</span> items vary by country or state: set the interval your local rules require.</p>
+  <div id="sfList"></div></div></div>
+
+  <div class="sheet"><div class="sheet-h"><h2>Defects log</h2><span class="ref" id="dfRef"></span></div>
+  <div class="sheet-b"><div class="grid g4">
+    <label class="f"><span>Defect</span><input type="text" id="dfItem" placeholder="e.g. Bathroom fan not working"></label>
+    <label class="f"><span>Reported</span><input type="date" id="dfDate"></label>
+    <label class="f"><span>Priority</span><select id="dfPri"><option>High</option><option selected>Medium</option><option>Low</option></select></label>
+    <label class="f"><span>Status</span><select id="dfSt"><option>Open</option><option>Booked</option><option>Fixed</option></select></label>
+  </div>
+  <div class="row" style="margin-top:10px"><button class="btn pri" id="dfSave" type="button">Add defect</button></div>
+  <div class="tbl-wrap" style="margin-top:14px"><table class="tbl stack" id="dfTbl"><thead><tr><th>Defect</th><th>Reported</th><th>Priority</th><th>Status</th><th></th></tr></thead><tbody></tbody></table></div>
+  <p class="hint">Priority here is your own judgement (professional practice). Safety defects (gas, electrical, alarms, structure) should be dealt with first by a licensed or registered professional.</p></div></div>
+  </div>
+</section>
+
+<section class="view hide" id="view-due">
+  <div class="sheet"><div class="sheet-h"><h2>All due dates</h2><span class="ref" id="dueRef"></span></div>
+  <div class="sheet-b"><div class="tbl-wrap"><table class="tbl stack" id="dueTbl"><thead><tr><th>Property</th><th>Item</th><th>Last done</th><th>Next due</th><th>Status</th></tr></thead><tbody></tbody></table></div></div></div>
+</section>
+
+<section class="view hide" id="view-report">
+  <div class="row no-print" style="margin-bottom:12px">
+    <button class="btn pri" id="printBtn" type="button">Print / Save as PDF</button>
+    <button class="btn" id="exportBtn" type="button">Download backup (.json)</button>
+    <label class="btn">Restore backup<input type="file" id="importFile" accept=".json,application/json" style="display:none"></label>
+    <button class="btn danger" id="resetBtn" type="button">Clear all data</button>
+  </div>
+  <div class="sheet"><div class="sheet-b" id="reportBody"></div></div>
+  <div class="sheet"><div class="sheet-h"><h2>Sources</h2><span class="ref">REFERENCES</span></div><div class="sheet-b"><ul class="srclist" id="srcList"></ul>
+  <p class="hint">Landlord legal duties (for example gas safety checks, electrical inspections, alarm rules and deposit protection) differ by country and state. This tool records dates; it does not tell you what the law requires. Check your local housing authority.</p></div></div>
+</section>
+
+</div></main>
+<footer><div class="wrap"><span>THE SNAG TAG &middot; BENEATH THE SURFACE COLLECTION &middot; LANDLORD PORTFOLIO</span><span id="saveState">SAVED ON THIS DEVICE</span></div></footer>
+<div class="toast" id="toast"></div>
+<script>
+(function(){
+"use strict";
+var KEY='snagtag_bts_landlord_v1';
+var SRC={NFPA:'NFPA - Smoke Alarms at Home safety tips',ESFI:'ESFi - Home Safety',CDC:'US CDC - Avoid Carbon Monoxide Poisoning',GSR:'Gas Safe Register (UK)',USFA:'US Fire Administration - Heating Fire Safety',ESTAR:'ENERGY STAR - Heating and cooling maintenance checklist',LOCAL:'Local law (check your housing authority)',PP:'Professional practice'};
+var LIB=[
+ {id:'smoke',t:'Smoke alarms tested',m:1,k:'cit',s:['NFPA'],n:'Test at least once a month (often by the tenant; confirm at each visit).'},
+ {id:'alarm10',t:'Smoke alarms replaced (10-year date)',m:120,k:'cit',s:['NFPA'],n:'Enter the date the alarms were fitted.'},
+ {id:'co',t:'CO alarm batteries checked or replaced',m:6,k:'cit',s:['CDC'],n:'Each spring and autumn.',fuel:true},
+ {id:'service',t:'Fuel-burning appliances serviced',m:12,k:'cit',s:['CDC','GSR'],n:'By a qualified (registered) technician. Some countries also require a yearly landlord gas safety check.',fuel:true},
+ {id:'chimney',t:'Chimneys and heating equipment cleaned and inspected',m:12,k:'cit',s:['USFA'],n:'By a professional.'},
+ {id:'hvac',t:'Heating and cooling contractor check-up',m:12,k:'cit',s:['ESTAR'],n:'Annual pre-season check-up.'},
+ {id:'rcd',t:'GFCI / AFCI / RCD test',m:1,k:'cit',s:['NFPA','ESFI'],n:'Monthly, as the manufacturer describes.'},
+ {id:'eicr',t:'Electrical installation inspection',m:60,k:'local',s:['LOCAL'],n:'Interval set by local law or a qualified electrician. Set it to match your rules.'},
+ {id:'gascert',t:'Landlord gas safety record / certificate',m:12,k:'local',s:['LOCAL'],n:'Where required by law. Set the interval to match your rules.',fuel:true},
+ {id:'pest',t:'Pest inspection',m:12,k:'pp',s:['PP'],n:'Suggested yearly where pests are a risk.'},
+ {id:'gutters',t:'Gutters and downpipes cleared',m:6,k:'pp',s:['PP'],n:'By someone with safe access. Suggested twice a year.'},
+ {id:'visit',t:'Property condition visit',m:6,k:'pp',s:['PP'],n:'With proper notice to the tenant, as local law requires. Suggested twice a year.'}
+];
+var S={theme:'light',props:[],cur:null};
+try{var r=localStorage.getItem(KEY);if(r){var o=JSON.parse(r);if(o&&Array.isArray(o.props))S=Object.assign(S,o);}}catch(e){}
+function $(s){return document.querySelector(s);}function $$(s){return Array.prototype.slice.call(document.querySelectorAll(s));}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function toast(m){var t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(function(){t.classList.remove('show');},2400);}
+var tm=null;function flush(){clearTimeout(tm);tm=null;try{localStorage.setItem(KEY,JSON.stringify(S));$('#saveState').textContent='SAVED ON THIS DEVICE';}catch(e){$('#saveState').textContent='NOT SAVED';}}
+function save(){clearTimeout(tm);tm=setTimeout(flush,200);}
+window.addEventListener('pagehide',function(){if(tm)flush();});
+function today(){var d=new Date();d.setHours(12,0,0,0);return d;}
+function iso(d){return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10);}
+function pd(s){return s?new Date(s+'T12:00:00'):null;}
+function fmt(s){return s?pd(s).toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'}):'-';}
+function addM(s,m){var d=pd(s);d.setMonth(d.getMonth()+m);return iso(d);}
+function every(m){return m===1?'Monthly':m===12?'Yearly':m===120?'Every 10 years':'Every '+m+' months';}
+function cur(){return S.props.filter(function(p){return p.id===S.cur;})[0];}
+function items(p){return LIB.filter(function(x){return p.on[x.id];}).map(function(x){return Object.assign({},x,{m:p.months[x.id]||x.m});});}
+function st(p,x){var l=p.last[x.id];if(!l)return {t:'No date: due now',c:'Medium',n:iso(today())};var n=addM(l,x.m),d=Math.round((pd(n)-today())/86400000);if(d<0)return {t:'Overdue by '+(-d)+' day'+(d===-1?'':'s'),c:'High',n:n};if(d<=30)return {t:'Due in '+d+' day'+(d===1?'':'s'),c:'Medium',n:n};return {t:'OK',c:'Low',n:n};}
+function summary(p){var its=items(p),od=0,soon=0,next=null;its.forEach(function(x){var s=st(p,x);if(s.c==='High')od++;else if(s.c==='Medium')soon++;if(!next||s.n<next)next=s.n;});var open=p.defects.filter(function(d){return d.st!=='Fixed';}).length,hi=p.defects.filter(function(d){return d.st!=='Fixed'&&d.pri==='High';}).length;return {od:od,soon:soon,next:next,open:open,hi:hi,n:its.length};}
+function newProp(){var id='p'+Date.now();var p={id:id,d:{name:'Property '+(S.props.length+1)},on:{},last:{},months:{},defects:[]};['smoke','alarm10','rcd','visit'].forEach(function(k){p.on[k]=true;});S.props.push(p);S.cur=id;save();return p;}
+function renderPort(){
+  var tot={od:0,open:0,hi:0};S.props.forEach(function(p){var s=summary(p);tot.od+=s.od;tot.open+=s.open;tot.hi+=s.hi;});
+  $('#kpis').innerHTML='<div class="kpi"><div class="k">Properties</div><div class="v">'+S.props.length+'</div></div><div class="kpi"><div class="k">Overdue items</div><div class="v" style="color:var(--high)">'+tot.od+'</div></div><div class="kpi"><div class="k">Open defects</div><div class="v">'+tot.open+'</div></div><div class="kpi"><div class="k">High-priority defects</div><div class="v" style="color:var(--high)">'+tot.hi+'</div></div>';
+  $('#portRef').textContent=S.props.length+' PROPERT'+(S.props.length===1?'Y':'IES');
+  $('#pcards').innerHTML=S.props.length?S.props.map(function(p){var s=summary(p);var te=p.d.tend?Math.round((pd(p.d.tend)-today())/86400000):null;
+    return '<div class="pc"><h3>'+esc(p.d.name||'Property')+'</h3><div class="sub">'+esc(p.d.address||'')+(p.d.type?' &middot; '+esc(p.d.type):'')+'</div>'+
+    '<div>'+(s.od?'<span class="risk High">'+s.od+' overdue</span> ':'')+(s.soon?'<span class="risk Medium">'+s.soon+' due soon</span> ':'')+(!s.od&&!s.soon?'<span class="risk Low">Up to date</span> ':'')+(s.open?'<span class="risk '+(s.hi?'High':'Medium')+'">'+s.open+' open defect'+(s.open===1?'':'s')+'</span>':'')+'</div>'+
+    '<div class="sub">Next due: '+(s.next?fmt(s.next):'-')+(te!==null?' &middot; Tenancy '+(te<0?'ended':'ends in '+te+' days'):'')+'</div>'+
+    '<div class="row"><button class="btn sm pri" type="button" data-open="'+p.id+'">Open</button></div></div>';}).join(''):'<div class="empty">No properties yet. Tap <b>+ Add property</b>.</div>';
+}
+function renderProp(){
+  var p=cur();$('#noProp').classList.toggle('hide',!!p);$('#propWrap').classList.toggle('hide',!p);if(!p)return;
+  $('#propSel').innerHTML=S.props.map(function(q){return '<option value="'+q.id+'"'+(q.id===p.id?' selected':'')+'>'+esc(q.d.name||'Property')+'</option>';}).join('');
+  $$('[data-q]').forEach(function(el){el.value=p.d[el.dataset.q]||'';});
+  var h='';LIB.forEach(function(x){var on=!!p.on[x.id],m=p.months[x.id]||x.m,s=on?st(p,Object.assign({},x,{m:m})):null;
+    h+='<div class="sf"><input type="checkbox" data-on="'+x.id+'"'+(on?' checked':'')+' aria-label="Use this item"><div><b>'+esc(x.t)+'</b><div class="sub">'+esc(x.n)+'</div><div class="sub"><span class="pill '+(x.k==='cit'?'cit':'pp')+'">'+(x.k==='cit'?'CITED':x.k==='local'?'LOCAL LAW':'SUGGESTED')+'</span>'+x.s.map(function(k){return esc(SRC[k].split(' - ')[0]);}).join(', ')+'</div></div>'+
+    '<label class="f"><span>Repeat</span><select data-m="'+x.id+'">'+[1,3,6,12,24,36,60,120].map(function(v){return '<option value="'+v+'"'+(m===v?' selected':'')+'>'+every(v)+'</option>';}).join('')+'</select></label>'+
+    '<label class="f"><span>Last done</span><input type="date" data-last="'+x.id+'" value="'+esc(p.last[x.id]||'')+'"></label>'+
+    '<div>'+(on?'<span class="risk '+s.c+'">'+esc(s.t)+'</span>':'<span class="hint">Off</span>')+'</div></div>';});
+  $('#sfList').innerHTML=h;var sm=summary(p);$('#sfRef').textContent=sm.n+' ON'+(sm.od?' · '+sm.od+' OVERDUE':'');
+  $('#dfTbl tbody').innerHTML=p.defects.map(function(d,i){return '<tr><td data-l="Defect">'+esc(d.item)+'</td><td data-l="Reported">'+fmt(d.date)+'</td><td data-l="Priority"><span class="risk '+d.pri+'">'+d.pri+'</span></td><td data-l="Status"><select data-dst="'+i+'">'+['Open','Booked','Fixed'].map(function(x){return '<option'+(d.st===x?' selected':'')+'>'+x+'</option>';}).join('')+'</select></td><td><button class="btn sm ghost" type="button" data-ddel="'+i+'">Remove</button></td></tr>';}).join('')||'<tr><td colspan="5"><div class="empty">No defects logged.</div></td></tr>';
+  $('#dfRef').textContent=sm.open+' OPEN';
+}
+function allDue(){var rows=[];S.props.forEach(function(p){items(p).forEach(function(x){var s=st(p,x);rows.push({p:p,x:x,s:s});});});rows.sort(function(a,b){return a.s.n.localeCompare(b.s.n);});return rows;}
+function renderDue(){var rows=allDue();$('#dueTbl tbody').innerHTML=rows.map(function(r){return '<tr><td data-l="Property">'+esc(r.p.d.name||'Property')+'</td><td data-l="Item">'+esc(r.x.t)+'</td><td data-l="Last done">'+fmt(r.p.last[r.x.id])+'</td><td data-l="Next due">'+fmt(r.s.n)+'</td><td data-l="Status"><span class="risk '+r.s.c+'">'+esc(r.s.t)+'</span></td></tr>';}).join('')||'<tr><td colspan="5"><div class="empty">Nothing to show yet.</div></td></tr>';
+  $('#dueRef').textContent=rows.filter(function(r){return r.s.c==='High';}).length+' OVERDUE';}
+function renderReport(){
+  var h='<div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:10px;margin-bottom:14px"><div><div style="font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--cyan)">THE SNAG TAG &middot; BENEATH THE SURFACE</div><h2 style="margin:4px 0 0;font-size:22px">Landlord Portfolio Record</h2><div class="hint">Printed '+fmt(iso(today()))+'</div></div></div>';
+  if(!S.props.length)h+='<p class="hint">No properties recorded.</p>';
+  S.props.forEach(function(p){var s=summary(p);
+    h+='<div class="rep-f"><div class="row"><b>'+esc(p.d.name||'Property')+'</b><span class="hint">'+esc(p.d.address||'')+'</span></div><dl>'+
+    '<dt>Tenancy</dt><dd>'+fmt(p.d.tstart)+' to '+fmt(p.d.tend)+' &middot; Deposit: '+esc(p.d.deposit||'-')+'</dd>'+
+    '<dt>Condition reports</dt><dd>Move-in: '+fmt(p.d.cin)+' &middot; Move-out: '+fmt(p.d.cout)+'</dd>'+
+    '<dt>Records</dt><dd>'+(items(p).map(function(x){var q=st(p,x);return esc(x.t)+': last '+fmt(p.last[x.id])+', '+esc(q.t);}).join('<br>')||'-')+'</dd>'+
+    '<dt>Open defects</dt><dd>'+(p.defects.filter(function(d){return d.st!=='Fixed';}).map(function(d){return esc(d.item)+' ('+d.pri+', '+d.st+', reported '+fmt(d.date)+')';}).join('<br>')||'None')+'</dd>'+
+    (p.d.notes?'<dt>Notes</dt><dd>'+esc(p.d.notes)+'</dd>':'')+'</dl></div>';});
+  h+='<div class="info" style="margin-top:18px"><b>Important:</b> this record lists dates and defects entered by the landlord. It is not a safety certificate or inspection, and does not confirm legal compliance.</div>';
+  $('#reportBody').innerHTML=h;
+  $('#srcList').innerHTML=Object.keys(SRC).map(function(k){return '<li><b>'+esc(SRC[k])+'</b></li>';}).join('');
+}
+function renderAll(){renderPort();renderProp();renderDue();renderReport();}
+function applyTheme(){document.documentElement.setAttribute('data-theme',S.theme);$$('#themeSeg button').forEach(function(b){b.classList.toggle('on',b.dataset.v===S.theme);});}
+function go(t){$$('.view').forEach(function(v){v.classList.add('hide');});$('#view-'+t).classList.remove('hide');$$('#tabs button').forEach(function(b){b.classList.toggle('on',b.dataset.t===t);});renderAll();window.scrollTo(0,0);}
+$$('#tabs button').forEach(function(b){b.addEventListener('click',function(){go(b.dataset.t);});});
+$$('#themeSeg button').forEach(function(b){b.addEventListener('click',function(){S.theme=b.dataset.v;applyTheme();save();});});
+$('#addProp').addEventListener('click',function(){newProp();go('prop');toast('Property added');});
+$('#pcards').addEventListener('click',function(e){var b=e.target.closest('[data-open]');if(!b)return;S.cur=b.dataset.open;save();go('prop');});
+$('#propSel').addEventListener('change',function(e){S.cur=e.target.value;save();renderProp();});
+$$('[data-q]').forEach(function(el){var h=function(){var p=cur();if(!p)return;p.d[el.dataset.q]=el.value;save();};el.addEventListener('input',h);el.addEventListener('change',function(){h();if(el.dataset.q==='name'){renderProp();}});});
+$('#sfList').addEventListener('change',function(e){var p=cur();if(!p)return;var t=e.target;
+  if(t.dataset.on){if(t.checked)p.on[t.dataset.on]=true;else delete p.on[t.dataset.on];}
+  else if(t.dataset.m){p.months[t.dataset.m]=+t.value;}
+  else if(t.dataset.last!==undefined){if(t.value)p.last[t.dataset.last]=t.value;else delete p.last[t.dataset.last];}
+  save();renderProp();});
+$('#dfSave').addEventListener('click',function(){var p=cur();if(!p)return;if(!$('#dfItem').value.trim()){toast('Enter the defect.');return;}p.defects.push({item:$('#dfItem').value.trim(),date:$('#dfDate').value||iso(today()),pri:$('#dfPri').value,st:$('#dfSt').value});$('#dfItem').value='';save();renderProp();toast('Defect added');});
+$('#dfTbl').addEventListener('change',function(e){var p=cur();var s=e.target.dataset.dst;if(s===undefined)return;p.defects[+s].st=e.target.value;save();renderProp();});
+$('#dfTbl').addEventListener('click',function(e){var p=cur();var b=e.target.closest('[data-ddel]');if(!b)return;p.defects.splice(+b.dataset.ddel,1);save();renderProp();});
+$('#delProp').addEventListener('click',function(e){var b=e.currentTarget;if(b.dataset.confirm){S.props=S.props.filter(function(p){return p.id!==S.cur;});S.cur=S.props.length?S.props[0].id:null;save();delete b.dataset.confirm;b.textContent='Delete this property';go('port');toast('Property deleted');}else{b.dataset.confirm='1';b.textContent='Tap again to delete';setTimeout(function(){delete b.dataset.confirm;b.textContent='Delete this property';},3500);}});
+$('#printBtn').addEventListener('click',function(){renderReport();window.print();});
+$('#exportBtn').addEventListener('click',function(){var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(Object.assign({v:1,kind:'landlord'},S),null,1)],{type:'application/json'}));a.download='landlord-portfolio-'+iso(today())+'.json';document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},400);toast('Backup downloaded');});
+$('#importFile').addEventListener('change',function(e){var f=e.target.files[0];if(!f)return;var rd=new FileReader();rd.onload=function(){try{var o=JSON.parse(rd.result);if(!o||o.kind!=='landlord'||!Array.isArray(o.props))throw 0;delete o.v;delete o.kind;S=Object.assign({theme:'light',props:[],cur:null},o);flush();applyTheme();go('report');toast('Backup restored');}catch(err){toast('That file is not a valid Landlord Portfolio backup.');}e.target.value='';};rd.readAsText(f);});
+$('#resetBtn').addEventListener('click',function(e){var b=e.currentTarget;if(b.dataset.confirm){var th=S.theme;S={theme:th,props:[],cur:null};flush();renderAll();toast('All data cleared');delete b.dataset.confirm;b.textContent='Clear all data';}else{b.dataset.confirm='1';b.textContent='Tap again to clear everything';setTimeout(function(){delete b.dataset.confirm;b.textContent='Clear all data';},3500);}});
+applyTheme();go('port');
+})();
+</script>
+</body>
+</html>
