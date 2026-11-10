@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Landlord Portfolio | Beneath the Surface | The Snag Tag</title>
+<meta name="description" content="Safety records, tenancy dates and defects for every property you let, in one place. Works offline, no subscription.">
+<title>The Keyring - Multi-Property Landlord Safety Records | Beneath the Surface | The Snag Tag</title>
 <style>
 :root{
   --paper:#F7FAFD; --sheet:#FFFFFF; --grid:rgba(45,91,154,.07); --grid2:rgba(45,91,154,.035);
@@ -204,6 +205,21 @@ body[data-mode="owner"] .buyer-only{display:none!important}
   main{padding:0}
 }
 </style>
+<style id="bts-identity">
+/* Beneath the Surface - House Records group identity */
+:root:not([data-theme="dark"]){
+  --paper:#FBF9F3; --ink:#1F3328; --ink2:#3E5446; --muted:#6A7A6F;
+  --line:#D9D3BF; --line2:#ECE8DA; --grid:rgba(47,90,69,.06); --grid2:rgba(47,90,69,.03);
+  --blue:#2F5A45; --blue-soft:#E8F0EA; --cyan:#9A7B3C; --cyan-soft:#F5EFE0; --focus:#2F5A45;
+}
+body{font-family:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif}
+.brand h1,.sheet-h h2{font-family:Georgia,"Times New Roman",serif;letter-spacing:0}
+.brand .plain{font-size:12.5px;color:var(--ink2);margin-top:2px}
+.sheet-h{position:relative}
+.sheet-h::after{content:"";position:absolute;left:16px;right:16px;bottom:-4px;height:6px;background:linear-gradient(#9A7B3C,#9A7B3C) top/100% 1px no-repeat,linear-gradient(#9A7B3C,#9A7B3C) bottom/100% 1px no-repeat;opacity:.75;pointer-events:none}
+.trail-name{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);margin:0 0 6px}
+@media print{.sheet-h::after{display:none}}
+</style>
 <style>
 .pcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
 .pc{background:var(--sheet);border:1px solid var(--line);border-left:6px solid var(--cyan);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:6px}
@@ -219,21 +235,21 @@ body[data-mode="owner"] .buyer-only{display:none!important}
 </head>
 <body data-mode="owner">
 <header class="tb"><div class="wrap tb-row" style="padding:0">
-  <div class="tb-cell brand"><div class="coll">The Snag Tag &middot; Beneath the Surface</div><h1>Landlord <span>Portfolio</span></h1></div>
+  <div class="tb-cell brand"><div class="coll">The Snag Tag &middot; Beneath the Surface</div><h1>The <span>Keyring</span></h1><div class="plain">Multi-Property Landlord Safety Records</div></div>
   <div class="tb-cell"><div class="tb-label">Display</div><div class="seg" id="themeSeg"><button data-v="light">Light</button><button data-v="dark">Dark</button></div></div>
 </div></header>
 <nav class="tabs"><div class="wrap" id="tabs">
   <button data-t="port"><span class="n">00</span>Portfolio</button>
   <button data-t="prop"><span class="n">01</span>Property</button>
   <button data-t="due"><span class="n">02</span>All due dates</button>
-  <button data-t="report"><span class="n">03</span>Report &amp; backup</button>
+  <button data-t="report"><span class="n">03</span>Your Record &amp; backup</button>
 </div></nav>
 <main><div class="wrap">
 
 <section class="view" id="view-port">
   <div class="sheet"><div class="sheet-h"><h2>Your properties</h2><span class="ref" id="portRef"></span></div>
   <div class="sheet-b">
-    <p class="lede">Safety records, tenancy dates, condition reports and open defects for every property you let, in one place. Pair it with the Move-In / Move-Out tool for room-by-room condition, and the Safety Trio for full checks.</p>
+    <p class="lede">Safety records, tenancy dates, condition reports and open defects for every property you let, in one place. Pair it with Day One, Last Day for room-by-room condition, and the Spark, Smoke & Silent Gas bundle for full checks.</p>
     <div class="kpis" id="kpis"></div>
     <div class="row" style="margin-bottom:12px"><button class="btn pri" id="addProp" type="button">+ Add property</button></div>
     <div class="pcards" id="pcards"></div>
@@ -295,7 +311,7 @@ body[data-mode="owner"] .buyer-only{display:none!important}
 </section>
 
 </div></main>
-<footer><div class="wrap"><span>THE SNAG TAG &middot; BENEATH THE SURFACE COLLECTION &middot; LANDLORD PORTFOLIO</span><span id="saveState">SAVED ON THIS DEVICE</span></div></footer>
+<footer><div class="wrap"><span>THE SNAG TAG &middot; BENEATH THE SURFACE COLLECTION &middot; THE KEYRING</span><span id="saveState">SAVED ON THIS DEVICE</span></div></footer>
 <div class="toast" id="toast"></div>
 <script>
 (function(){
@@ -363,7 +379,7 @@ function allDue(){var rows=[];S.props.forEach(function(p){items(p).forEach(funct
 function renderDue(){var rows=allDue();$('#dueTbl tbody').innerHTML=rows.map(function(r){return '<tr><td data-l="Property">'+esc(r.p.d.name||'Property')+'</td><td data-l="Item">'+esc(r.x.t)+'</td><td data-l="Last done">'+fmt(r.p.last[r.x.id])+'</td><td data-l="Next due">'+fmt(r.s.n)+'</td><td data-l="Status"><span class="risk '+r.s.c+'">'+esc(r.s.t)+'</span></td></tr>';}).join('')||'<tr><td colspan="5"><div class="empty">Nothing to show yet.</div></td></tr>';
   $('#dueRef').textContent=rows.filter(function(r){return r.s.c==='High';}).length+' OVERDUE';}
 function renderReport(){
-  var h='<div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:10px;margin-bottom:14px"><div><div style="font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--cyan)">THE SNAG TAG &middot; BENEATH THE SURFACE</div><h2 style="margin:4px 0 0;font-size:22px">Landlord Portfolio Record</h2><div class="hint">Printed '+fmt(iso(today()))+'</div></div></div>';
+  var h='<div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:10px;margin-bottom:14px"><div><div style="font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--cyan)">THE SNAG TAG &middot; BENEATH THE SURFACE</div><h2 style="margin:4px 0 0;font-size:22px">The Keyring &middot; Your Record</h2><div class="hint">Printed '+fmt(iso(today()))+'</div></div></div>';
   if(!S.props.length)h+='<p class="hint">No properties recorded.</p>';
   S.props.forEach(function(p){var s=summary(p);
     h+='<div class="rep-f"><div class="row"><b>'+esc(p.d.name||'Property')+'</b><span class="hint">'+esc(p.d.address||'')+'</span></div><dl>'+
@@ -396,12 +412,12 @@ $('#dfTbl').addEventListener('click',function(e){var p=cur();var b=e.target.clos
 $('#delProp').addEventListener('click',function(e){var b=e.currentTarget;if(b.dataset.confirm){S.props=S.props.filter(function(p){return p.id!==S.cur;});S.cur=S.props.length?S.props[0].id:null;save();delete b.dataset.confirm;b.textContent='Delete this property';go('port');toast('Property deleted');}else{b.dataset.confirm='1';b.textContent='Tap again to delete';setTimeout(function(){delete b.dataset.confirm;b.textContent='Delete this property';},3500);}});
 $('#printBtn').addEventListener('click',function(){renderReport();window.print();});
 $('#exportBtn').addEventListener('click',function(){var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(Object.assign({v:1,kind:'landlord'},window.tstNumsAdd?tstNumsAdd(S):S),null,1)],{type:'application/json'}));a.download='landlord-portfolio-'+iso(today())+'.json';document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},400);toast('Backup downloaded');});
-$('#importFile').addEventListener('change',function(e){var f=e.target.files[0];if(!f)return;var rd=new FileReader();rd.onload=function(){try{var o=JSON.parse(rd.result);if(!o||o.kind!=='landlord'||!Array.isArray(o.props))throw 0;delete o.v;delete o.kind;S=Object.assign({theme:'light',props:[],cur:null},o);flush();applyTheme();go('report');toast('Backup restored');}catch(err){toast('That file is not a valid Landlord Portfolio backup.');}e.target.value='';};rd.readAsText(f);});
+$('#importFile').addEventListener('change',function(e){var f=e.target.files[0];if(!f)return;var rd=new FileReader();rd.onload=function(){try{var o=JSON.parse(rd.result);if(!o||o.kind!=='landlord'||!Array.isArray(o.props))throw 0;delete o.v;delete o.kind;S=Object.assign({theme:'light',props:[],cur:null},o);flush();applyTheme();go('report');toast('Backup restored');}catch(err){toast('That file is not a valid The Keyring backup.');}e.target.value='';};rd.readAsText(f);});
 $('#resetBtn').addEventListener('click',function(e){var b=e.currentTarget;if(b.dataset.confirm){var th=S.theme;S={theme:th,props:[],cur:null};flush();renderAll();toast('All data cleared');delete b.dataset.confirm;b.textContent='Clear all data';}else{b.dataset.confirm='1';b.textContent='Tap again to clear everything';setTimeout(function(){delete b.dataset.confirm;b.textContent='Clear all data';},3500);}});
 applyTheme();go('port');
 })();
 </script>
-<script>window.TST_SAFE={id:'83ixqrbt',accent:'#2D5B9A',backup:function(){document.getElementById('exportBtn').click()},restore:function(){document.getElementById('importFile').click()}};</script>
+<script>window.TST_SAFE={id:'83ixqrbt',accent:'#2F5A45',backup:function(){document.getElementById('exportBtn').click()},restore:function(){document.getElementById('importFile').click()}};</script>
 <!-- ===== The Snag Tag - Your emergency numbers ===== -->
 <style>
 .tst-nums{margin:8px 0 2px}
